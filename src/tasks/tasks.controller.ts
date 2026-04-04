@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import type { ITask, ITaskResponse } from './task.interface';
+import type { ITask, ITaskResponse, ITaskStatus } from './task.interface';
 import { CreateTaskDto } from './dto/create-task.dto';
 
 @Controller('tasks')
@@ -11,9 +11,26 @@ export class TasksController {
     getAllTasks(): ITask[] {  // method
         return this.taskService.getAllTasks();
     }
+    @Get("/:id")
+    getSingleTask(@Param("id") id: string): ITaskResponse<ITask | undefined> {
+        return this.taskService.getSingleTask(id);
+    }
+
+    @Patch("/update/:id") 
+    updateTaskStatus(
+        @Param("id") id: string,
+        @Body("status") status: ITaskStatus): ITaskResponse<ITask[]>
+    {
+        return this.taskService.updateTaskStatus(id, status);
+    }
+    
+    @Post("/delete/:id")
+    deleteTask(@Param("id") id: string): ITaskResponse<ITask[]> {
+        return this.taskService.deleteTask(id);
+    }
 
     @Post("create")
-    createTask(createTaskDto: CreateTaskDto): ITaskResponse {
-            return this.taskService.createTask(createTaskDto);
+    createTask(@Body() createTaskDto: CreateTaskDto): ITaskResponse<ITask[]> {
+        return this.taskService.createTask(createTaskDto);
     }
 }

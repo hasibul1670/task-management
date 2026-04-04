@@ -10,8 +10,8 @@ export enum ITaskStatus {
     DONE = 'DONE'
 }
 
-export interface ITaskResponse {
+export interface ITaskResponse<T> {
     success: boolean;
     message: string;
-    data: ITask[];
+    data?: T;
 }
