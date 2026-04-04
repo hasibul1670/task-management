@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { ITask, ITaskResponse, ITaskStatus } from './task.interface';
+import type { ITask, ITaskResponse } from './task.interface';
+import { ITaskStatus } from './task.interface';
 import { v4 as uuidv4 } from 'uuid';
+import { CreateTaskDto } from './dto/create-task.dto';
 
 
 @Injectable()
@@ -11,7 +13,8 @@ export class TasksService {
         return this.tasks;
     }
 
-    createTask(title: string, description: string):ITask {
+    createTask(createTaskDto: CreateTaskDto): ITaskResponse {
+        const {title, description} = createTaskDto;
         const task:ITask = {
             id: uuidv4(),
             title,
@@ -19,6 +22,10 @@ export class TasksService {
             status: ITaskStatus.OPEN,
         }
         this.tasks.push(task);
-        return task
+        return {
+            success: true,
+            message: "Task created successfully.",
+            data: this.tasks
+        }
     }
 }
