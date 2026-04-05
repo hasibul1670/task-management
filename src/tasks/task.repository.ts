@@ -1,7 +1,7 @@
-import { Entity, EntityRepository, Repository } from "typeorm";
-import { ITask } from "./task.interface";
+import { Entity, Repository } from "typeorm";
+import { Task } from "./entities/task.entity";
 
 @Entity()
-export class TaskRepository extends Repository<ITask> {
+export class TaskRepository extends Repository<Task> {
     
 }
