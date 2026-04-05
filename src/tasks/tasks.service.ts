@@ -62,18 +62,8 @@ export class TasksService {
     //     }
     // }
 
-    async createTask(createTaskDto: CreateTaskDto): Promise<ITaskResponse<Task>>{
-        const { title, description } = createTaskDto;
-        const task = new Task();
-        task.title = title;
-        task.description = description;
-        task.status = ITaskStatus.OPEN;
-        await task.save();
-        return {
-            success: true,
-            message: "Task created successfully.",
-            data: task
-        }
+    async createTask(createTaskDto: CreateTaskDto):Promise<ITaskResponse<Task>>{
+        return this.taskRepository.createTask(createTaskDto);
     }
 
     // getTaskWithFilter(getTaskFilterDTO: GetTaskFilterDTO): ITask[] {
