@@ -11,6 +11,8 @@ export class Task extends BaseEntity {
 
     @Column({ type: 'text' })
     description!: string;
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt!: Date;
 
     @Column({
         type: 'enum',
